@@ -8,13 +8,18 @@ jobs:
   qmk_setup:
     runs-on: ubuntu-latest
     steps:
+      - name: add custom deb repository
+        uses: myci-actions/add-deb-repo@10
+        with:
+          repo: deb https://linux.qmk.fm/ focal main
+          repo-name: qmk
+          # keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
       -
         name: Checkout
         uses: actions/checkout@v2
       -
         name: Install QMK toolchain
         run: |
-          echo "deb https://linux.qmk.fm/ focal main" >> /etc/apt/sources.list
           sudo apt update
           sudo apt install qmk
           ls
