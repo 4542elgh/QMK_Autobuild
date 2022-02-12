@@ -8,23 +8,30 @@ jobs:
   qmk_setup:
     runs-on: ubuntu-latest
     steps:
-      - name: add custom deb repository
+      - 
+        name: add custom deb repository
         uses: myci-actions/add-deb-repo@10
         with:
           repo: deb https://linux.qmk.fm/ focal main
           repo-name: qmk
-          # keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
           keys-asc: https://linux.qmk.fm/gpg_pubkey.txt
-      -
-        name: Checkout
-        uses: actions/checkout@v2
+      - 
+        name: Check out QMK firmware
+        uses: actions/checkout@master
+        with:
+          repository: qmk/qmk_firmware 
       -
         name: Install QMK toolchain
         run: |
           sudo apt update
           sudo apt install qmk
-          ls
-          pwd
-          qmk setup
-          qmk config compile.keymap=4542elgh
+          cd keyboards/splitkb/kyria/keymaps
+          mkdir 4542elgh
+          cd 4542elgh
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Compile firmware
+        run: |
           qmk compile -j 0
