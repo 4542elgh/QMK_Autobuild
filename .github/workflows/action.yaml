@@ -15,11 +15,11 @@ jobs:
           repo: deb https://linux.qmk.fm/ focal main
           repo-name: qmk
           keys-asc: https://linux.qmk.fm/gpg_pubkey.txt
-      - 
-        name: Check out QMK firmware
-        uses: actions/checkout@master
-        with:
-          repository: qmk/qmk_firmware 
+      # - 
+      #   name: Check out QMK firmware
+      #   uses: actions/checkout@master
+      #   with:
+      #     repository: qmk/qmk_firmware 
       -
         name: Install QMK toolchain
         run: |
