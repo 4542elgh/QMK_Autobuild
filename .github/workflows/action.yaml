@@ -25,13 +25,16 @@ jobs:
         run: |
           sudo apt update
           sudo apt install qmk
-          qmk setup -n
-          cd keyboards/splitkb/kyria/keymaps
-          mkdir 4542elgh
-          cd 4542elgh
+          qmk setup -y
       -
         name: Checkout
         uses: actions/checkout@v2
+      -
+        name: Copy keymap
+        run: |
+          mkdir -p keyboards/splitkb/kyria/keymaps/4542elgh
+          mv *.h keyboards/splitkb/kyria/keymaps/4542elgh
+          mv *.c keyboards/splitkb/kyria/keymaps/4542elgh
       -
         name: Compile firmware
         run: |
