@@ -2,7 +2,7 @@ name: qmk_setup
 
 on:
   push:
-    branches: main
+    # branches: main
 
 jobs:
   qmk_setup:
@@ -25,12 +25,10 @@ jobs:
         run: |
           sudo apt update
           sudo apt install qmk
+          qmk setup -n
           cd keyboards/splitkb/kyria/keymaps
           mkdir 4542elgh
           cd 4542elgh
-      -
-        name: Checkout
-        uses: actions/checkout@v2
       -
         name: Compile firmware
         run: |
