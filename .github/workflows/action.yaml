@@ -2,7 +2,7 @@ name: qmk_setup
 
 on:
   push:
-    branches: master
+    branches: main
 
 jobs:
   qmk_setup:
