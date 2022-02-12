@@ -30,24 +30,12 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
-        name: Home dir
-        run: |
-          ls
-      -
-        name: Home dir
-        run: |
-          pwd
-      -
-        name: QMK firmware dir
-        run: |
-          cd /home/runner/qmk_firmware
-          ls
-      -
         name: Copy keymap
         run: |
           mkdir -p /home/runner/qmk_firmware/keyboards/splitkb/kyria/keymaps/4542elgh
           mv  /home/runner/work/QMK_Test/QMK_Test/*.h /home/runner/qmk_firmware/keyboards/splitkb/kyria/keymaps/4542elgh
           mv  /home/runner/work/QMK_Test/QMK_Test/*.c /home/runner/qmk_firmware/keyboards/splitkb/kyria/keymaps/4542elgh
+          mv  /home/runner/work/QMK_Test/QMK_Test/*.mk /home/runner/qmk_firmware/keyboards/splitkb/kyria/keymaps/4542elgh
       -
         name: Compile firmware
         run: |
