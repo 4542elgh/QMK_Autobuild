@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
+        name: version
+        run: echo $(date "+%D")
+        id: version
+      - 
         name: add custom deb repository
         uses: myci-actions/add-deb-repo@10
         with:
@@ -40,15 +44,29 @@ jobs:
         name: Compile firmware
         run: |
           qmk compile -j 0 -kb splitkb/kyria -km 4542elgh
-      -
-        name: Check output path exist
-        run: |
-          cd /home/runner/qmk_firmware/.build
-          ls
+      # - 
+      #   name: Uploading artifacts # This have a 90 day data retention policy, for longer retention period, use releases
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: Kyria binary
+      #     path: |
+      #       /home/runner/qmk_firmware/.build/*.hex
       - 
-        name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+        name: Create release
+        uses: actions/create-release@v1
+        id: create_release
         with:
-          name: Kyria binary
-          path: |
-            /home/runner/qmk_firmware/.build/*.hex
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - 
+        name: Upload hex artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/qmk_firmware/.build/*.hex
+          asset_name: kyria_4542elgh.hex
