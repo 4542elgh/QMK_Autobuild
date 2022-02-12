@@ -14,6 +14,7 @@ jobs:
           repo: deb https://linux.qmk.fm/ focal main
           repo-name: qmk
           # keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          keys-asc: https://linux.qmk.fm/gpg_pubkey.txt
       -
         name: Checkout
         uses: actions/checkout@v2
