@@ -34,6 +34,10 @@ jobs:
         run: |
           ls
       -
+        name: Home dir
+        run: |
+          pwd
+      -
         name: QMK firmware dir
         run: |
           cd /home/runner/qmk_firmware
