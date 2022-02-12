@@ -32,4 +32,4 @@ jobs:
       -
         name: Compile firmware
         run: |
-          qmk compile -j 0
+          qmk compile -j 0 -kb splitkb/kyria -km 4542elgh
