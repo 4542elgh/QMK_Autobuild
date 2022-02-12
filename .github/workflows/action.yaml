@@ -14,7 +14,7 @@ jobs:
       -
         name: Install QMK toolchain
         run: |
-          echo "deb https://linux.qmk.fm/ focal main" >> /etc/apt/sources.list
+          sudo echo "deb https://linux.qmk.fm/ focal main" >> /etc/apt/sources.list
           sudo apt update
           sudo apt install qmk
           ls
