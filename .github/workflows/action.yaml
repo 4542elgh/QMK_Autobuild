@@ -30,6 +30,9 @@ jobs:
           mkdir 4542elgh
           cd 4542elgh
       -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
         name: Compile firmware
         run: |
           qmk compile -j 0 -kb splitkb/kyria -km 4542elgh
