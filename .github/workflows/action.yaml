@@ -1,0 +1,24 @@
+name: qmk_setup
+
+on:
+  push:
+    branches: master
+
+jobs:
+  qmk_setup:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Install QMK toolchain
+        run: |
+          echo "deb https://linux.qmk.fm/ focal main" >> /etc/apt/sources.list
+          sudo apt update
+          sudo apt install qmk
+          ls
+          pwd
+          qmk setup
+          qmk config compile.keymap=4542elgh
+          qmk compile -j 0
