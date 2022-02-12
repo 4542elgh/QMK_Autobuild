@@ -27,6 +27,14 @@
 // Lets you roll mod-tap keys
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
+#define DISABLE_LEADER
+
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
