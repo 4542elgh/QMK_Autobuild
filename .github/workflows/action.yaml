@@ -10,8 +10,12 @@ jobs:
     steps:
       - 
         name: Generate date as version
-        run: echo $(date "+%D")
+        run: echo "::set-output name=dateVer::$(echo $(date \"+%D\"))"
         id: version
+      - 
+        name: Get short SHA
+        id: shortSHA
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
       - 
         name: add qmk deb repository
         uses: myci-actions/add-deb-repo@10
@@ -58,8 +62,8 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: ${{ steps.version.outputs.version }}
-          tag_name: Release
+          release_name: ${{ steps.version.outputs.dateVer }}
+          tag_name: ${{ steps.shortSHA.outputs.sha7 }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - 
