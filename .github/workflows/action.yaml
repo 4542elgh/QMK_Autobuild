@@ -73,6 +73,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/qmk_firmware/.build
+          asset_path: /home/runner/qmk_firmware/.build/splitkb_kyria_rev1_4542elgh.hex
           asset_name: splitkb_kyria_rev1_4542elgh.hex
           asset_content_type: application/octet-stream
