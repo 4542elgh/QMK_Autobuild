@@ -13,10 +13,6 @@ jobs:
         run: echo $(date "+%D")
         id: version
       - 
-        name: Generate date as version
-        run: echo $GITHUB_SHA
-        id: sha
-      - 
         name: add qmk deb repository
         uses: myci-actions/add-deb-repo@10
         with:
@@ -63,7 +59,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: ${{ steps.version.outputs.version }}
-          tag_name: ${{ steps.sha.outputs.sha}}
+          tag_name: Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - 
