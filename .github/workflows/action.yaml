@@ -1,6 +1,7 @@
 name: qmk_setup
 
 on:
+  # Always run actions when pushed, might want to trigger only on main when deploying
   push:
     # branches: main
 
@@ -10,11 +11,13 @@ jobs:
     steps:
       - 
         name: Generate date as version
+        # Make sure to use the set-output prefix so you can access this output in other steps
         run: echo "::set-output name=dateVer::$(echo $(date \"+%D\"))"
         id: version
       - 
         name: Get short SHA
         id: shortSHA
+        # Make sure to use the set-output prefix so you can access this output in other steps
         run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
       - 
         name: add qmk deb repository
@@ -23,11 +26,6 @@ jobs:
           repo: deb https://linux.qmk.fm/ focal main
           repo-name: qmk
           keys-asc: https://linux.qmk.fm/gpg_pubkey.txt
-      # - 
-      #   name: Check out QMK firmware
-      #   uses: actions/checkout@master
-      #   with:
-      #     repository: qmk/qmk_firmware 
       -
         name: Install QMK toolchain
         run: |
@@ -35,9 +33,11 @@ jobs:
           sudo apt install qmk
           qmk setup -y
       -
+        # Check out the repo where this action lives
         name: Checkout own repo
         uses: actions/checkout@v2
       -
+        # This is hardcoded for now, should be running with a config file
         name: Copy repo keymap
         run: |
           mkdir -p /home/runner/qmk_firmware/keyboards/splitkb/kyria/keymaps/4542elgh
@@ -59,20 +59,24 @@ jobs:
         name: Create release
         uses: actions/create-release@v1
         id: create_release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           draft: false
           prerelease: false
           release_name: ${{ steps.version.outputs.dateVer }}
+          # This key should be unique each time new code is pushed, using commit hash
           tag_name: ${{ steps.shortSHA.outputs.sha7 }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
       - 
         name: Upload hex artifact to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
+          # Do not change
           upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # Path is pointing to a file, not sure why but this works
           asset_path: /home/runner/qmk_firmware/.build/splitkb_kyria_rev1_4542elgh.hex
           asset_name: splitkb_kyria_rev1_4542elgh.hex
+          # Refer to the correct MIME type. .bin .hex all use octet stream
           asset_content_type: application/octet-stream
