@@ -12,8 +12,7 @@ jobs:
       - 
         name: Generate date as version
         # Make sure to use the set-output prefix so you can access this output in other steps
-        # run: echo '::set-output name=dateVer::$(echo $(date "+%D"))'
-        run: echo ::set-output name=dateVer::$(date "+%D")
+        run: echo "::set-output name=dateVer::"$(date "+%D")
         id: version
       - 
         name: Get short SHA
