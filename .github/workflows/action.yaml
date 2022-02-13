@@ -12,7 +12,7 @@ jobs:
       - 
         name: Generate date as version
         # Make sure to use the set-output prefix so you can access this output in other steps
-        run: echo "::set-output name=dateVer::$(echo $(date \"+%D\"))"
+        run: echo '::set-output name=dateVer::$(echo $(date "+%D"))'
         id: version
       - 
         name: Get short SHA
@@ -64,8 +64,7 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: Testing release
-          # release_name: ${{ steps.version.outputs.dateVer }}
+          release_name: "{{ steps.version.outputs.dateVer }} - {{ steps.shortSHA.outputs.sha7 }}"
           # This key should be unique each time new code is pushed, using commit hash
           tag_name: ${{ steps.shortSHA.outputs.sha7 }}
       - 
